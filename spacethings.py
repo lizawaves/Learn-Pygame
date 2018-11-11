@@ -9,6 +9,8 @@ pygame.init()
 crash_sound = pygame.mixer.Sound('Big_Explosion_Cut_Off.wav')
 pygame.mixer.music.load('Ether_Oar.wav')
 
+shipImg = pygame.image.load('car.png')
+
 def unpause():
     global pause
     pygame.mixer.music.unpause()
@@ -101,6 +103,8 @@ def game_loop():
     thing_speed = 1
     dodged = 0
 
+    inicial_r = 20
+
     thing = []
 
     milestone = 5
@@ -108,7 +112,6 @@ def game_loop():
     for i in range(number_of_things):
         thing.append(Thing(0, 0, 0, 0, 0, 0))
 
-        inicial_r = 20
         thing[i].x_orientation = random.randrange(0, 100)
         thing[i].x = random.randrange(0, display_w)
 

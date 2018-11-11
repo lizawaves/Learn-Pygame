@@ -10,8 +10,12 @@ crash_sound = pygame.mixer.Sound('Big_Explosion_Cut_Off.wav')
 pygame.mixer.music.load('Ether_Oar.wav')
 
 
+
+
 def space_ship_teste(x,y,r):
-    pygame.draw.polygon(gameDisplay, green, ((x,y-(r*2)),(x+(10-(r*2)),y),(x+(5+r),y-(10-r))))
+    test = ((x,y-5),(x-5,y),(x+5,y))
+    print(test)
+    pygame.draw.polygon(gameDisplay, green, ((x-1,y-10),(x-10,y),(x+10,y)))
 
 def unpause():
     global pause
