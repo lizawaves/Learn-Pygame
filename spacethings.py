@@ -103,6 +103,8 @@ def game_loop():
 
     thing = []
 
+    milestone = 5
+
     for i in range(number_of_things):
         thing.append(Thing(0, 0, 0, 0, 0, 0))
 
@@ -178,11 +180,13 @@ def game_loop():
         for i in range(number_of_things):
             if thing[i].y > display_h or thing[i].x > display_w or thing[i].x < 0 or thing[i].y < 0:
                 dodged += 1
-                inicial_r += dodged
+                if dodged <= 13:
+                    inicial_r += dodged
 
-                if dodged == 5 or dodged == 10 or dodged == 15 or dodged == 20:
+                if dodged == milestone:
                     thing.append(Thing(0, 0, 0, 0, 0, 0))
                     number_of_things += 1
+                    milestone += milestone
 
 
                 thing[i].x_orientation = random.randrange(0, 100)
@@ -192,7 +196,7 @@ def game_loop():
                     thing[i].y = display_h
                 else:
                     thing[i].y = 0
-                thing[i].r = random.randrange(inicial_r, inicial_r + dodged)
+                thing[i].r = random.randrange(inicial_r, inicial_r + 20)
                 print(str(thing[i].x) + " " + str(thing[i].y))
 
 
