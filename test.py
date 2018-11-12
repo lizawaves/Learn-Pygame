@@ -12,10 +12,21 @@ pygame.mixer.music.load('Ether_Oar.wav')
 
 
 
-def space_ship_teste(x,y,r):
-    test = ((x,y-5),(x-5,y),(x+5,y))
-    print(test)
-    pygame.draw.polygon(gameDisplay, green, ((x-1,y-10),(x-10,y),(x+10,y)))
+def space_ship_teste(x,y,r,s,d):
+
+
+    toppoint = (x,y-s)
+    lpoint = (x-s,y)
+    rpoint = (x+s,y)
+
+    if 0 < d < 2:
+        #both go up
+        toppoint = (x+r, (y-s)+r)
+        lpoint = ((x-s, y)
+        rpoint = (x+s, y)
+
+
+    pygame.draw.polygon(gameDisplay, green, ((toppoint,lpoint,rpoint)))
 
 def unpause():
     global pause
@@ -99,7 +110,9 @@ def game_loop():
 
     ship_x = display_w / 2
     ship_y = display_h / 2
-    ship_r = 0
+    ship_r = 3
+    ship_s = 6
+    ship_d = 0
 
     ship_x_change = 0
     ship_y_change = 0
@@ -118,9 +131,14 @@ def game_loop():
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    ship_r += -5
+                    ship_d += -1
+                    if ship_d == -8:
+                        ship_d = 0
                 if event.key == pygame.K_RIGHT:
-                    ship_r += 5
+                    ship_d += 1
+                    if ship_d == 8:
+                        ship_d = 0
+
                 if event.key == pygame.K_UP:
                     ship_y_change += -1
                 if event.key == pygame.K_DOWN:
@@ -137,7 +155,7 @@ def game_loop():
 
         gameDisplay.fill(black)
 
-        space_ship_teste(ship_x, ship_y,ship_r)
+        space_ship_teste(ship_x, ship_y,ship_r,ship_s,ship_d)
 
 
         if ship_x < 0 or ship_x > display_w or ship_y < 0 or ship_y > display_h:

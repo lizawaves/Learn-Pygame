@@ -22,6 +22,8 @@ clock = pygame.time.Clock()
 
 pause = False
 
+
+
 class Thing:
   def __init__(self, x, y, r, speed,x_orientation, y_orientation):
     self.x = x
@@ -30,6 +32,13 @@ class Thing:
     self.speed = speed
     self.x_orientation = x_orientation
     self.y_orientation = y_orientation
+
+class Bullet:
+  def __init__(self, x, y, vel_x, vel_y):
+    self.x = x
+    self.y = y
+    self.vel_x = vel_x
+    self.vel_y = vel_y
 
 
 def button(msg,x,y,w,h,ic,ac,action=None):
@@ -69,3 +78,10 @@ def space_ship(x,y):
 
 def space_things(tx, ty, tr,color):
     pygame.draw.circle(gameDisplay, color, (tx, ty), tr, 0)
+
+
+def aim(x, y, color):
+    pygame.draw.circle(gameDisplay, color, (x, y), 2, 0)
+
+def bullets(x,y,color):
+    pygame.draw.circle(gameDisplay, color, (x, y), 2, 0)

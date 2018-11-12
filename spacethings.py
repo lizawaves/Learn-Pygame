@@ -15,8 +15,11 @@ def unpause():
     global pause
     pygame.mixer.music.unpause()
     pause = False
+    pygame.mouse.set_visible(False)
 
 def paused():
+
+    pygame.mouse.set_visible(True)
 
     pygame.mixer.music.pause()
 
@@ -39,6 +42,8 @@ def paused():
         clock.tick(15)
 
 def crash():
+
+    pygame.mouse.set_visible(True)
 
     pygame.mixer.music.stop()
     pygame.mixer.Sound.play(crash_sound)
@@ -63,7 +68,7 @@ def crash():
 
 def game_intro():
 
-
+    pygame.mouse.set_visible(True)
     intro = True
 
     while intro:
@@ -88,6 +93,7 @@ def game_intro():
 def game_loop():
 
     pygame.mixer.music.play(-1)
+    pygame.mouse.set_visible(False)
 
     global pause
 
@@ -109,6 +115,8 @@ def game_loop():
 
     milestone = 5
 
+    aimposition = (0,0)
+
     for i in range(number_of_things):
         thing.append(Thing(0, 0, 0, 0, 0, 0))
 
@@ -123,7 +131,17 @@ def game_loop():
 
         thing[i].r = random.randrange(inicial_r, inicial_r+20)
 
-        print(thing[i].x)
+
+    bullC = 0
+    bullet = []
+    #bullet.append(Bullet(0,0,0,0))
+    #bullet_x = 0
+    #bullet_y = 0
+    #bullet_vx = 0
+    #bullet_vy = 0
+    #bullet_c = blue
+
+
 
 
 
@@ -135,18 +153,36 @@ def game_loop():
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     ship_x_change += -1
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     ship_x_change += 1
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
                     ship_y_change += -1
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     ship_y_change += 1
                 if event.key == pygame.K_p:
                     pause = True
                     paused()
 
+            if event.type == pygame.MOUSEMOTION:
+                aimposition = pygame.mouse.get_pos()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if pygame.mouse.get_pressed()[0]:
+                    bullet.append(Bullet(0, 0, 0, 0))
+                    bullet[bullC].x = ship_x
+                    bullet[bullC].y = ship_y
+                    bullet[bullC].vx = (aimposition[0] - ship_x)/100
+                    bullet[bullC].vy = (aimposition[1] - ship_y)/100
+                    bullC += 1
+                    print('mouse clicked')
+
+
+
+        for i in range(bullC):
+            bullet[i].x += bullet[i].vx
+            bullet[i].y += bullet[i].vy
 
         ship_x += ship_x_change
         ship_y += ship_y_change
@@ -163,12 +199,17 @@ def game_loop():
             #print(str(thing[i].x) + " " + str(thing[i].y))
 
 
+
         gameDisplay.fill(black)
 
         space_ship(ship_x, ship_y)
+        aim(aimposition[0],aimposition[1],red)
 
         for i in range(number_of_things):
             space_things(thing[i].x,thing[i].y,thing[i].r,white)
+
+        for i in range(bullC):
+            bullets(int(bullet[i].x),int(bullet[i].y),blue)
 
 
         things_dodged(dodged)
@@ -200,7 +241,7 @@ def game_loop():
                 else:
                     thing[i].y = 0
                 thing[i].r = random.randrange(inicial_r, inicial_r + 20)
-                print(str(thing[i].x) + " " + str(thing[i].y))
+                #print(str(thing[i].x) + " " + str(thing[i].y))
 
 
         pygame.display.update()
@@ -209,5 +250,4 @@ def game_loop():
 game_intro()
 #game_loop()
 
-#arrumar a colisão das bolas
 #melhorar a progessão
