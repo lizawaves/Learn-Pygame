@@ -176,9 +176,9 @@ def game_loop():
                     bullet[bullC].vx = (aimposition[0] - ship_x)/100
                     bullet[bullC].vy = (aimposition[1] - ship_y)/100
                     bullC += 1
-                    print('mouse clicked')
 
 
+        ## set moviment
 
         for i in range(bullC):
             bullet[i].x += bullet[i].vx
@@ -196,9 +196,9 @@ def game_loop():
                 thing[i].y += -thing_speed
             else:
                 thing[i].y += thing_speed
-            #print(str(thing[i].x) + " " + str(thing[i].y))
 
 
+        ##print stuff
 
         gameDisplay.fill(black)
 
@@ -213,6 +213,9 @@ def game_loop():
 
 
         things_dodged(dodged)
+
+
+        #set colisions
 
         if ship_x < 0 or ship_x > display_w or ship_y < 0 or ship_y > display_h:
             crash()
